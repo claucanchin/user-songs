@@ -1,5 +1,7 @@
 class SongsController < ApplicationController
 
+before_action :authenticate_user!, :except => [ :show, :index ]
+
   def index
     @songs = Song.all
     respond_to do |format|
@@ -10,7 +12,7 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
-    
+
     respond_to do |format|
       format.html
       format.json { render json: @song }
@@ -27,6 +29,8 @@ class SongsController < ApplicationController
 
   def create
     @song = Song.new(song_params)
+
+    @song.user = current_user
 
     if @song.save
       redirect_to @song

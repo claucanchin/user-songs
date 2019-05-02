@@ -2,6 +2,9 @@
 
 <%= form_with scope: :song, url: songs_path, local: true do |form| %>
   <p>
+  	<p class="error">
+  		<%= show_errors(@song, :title) %>
+		</p>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
   </p>
